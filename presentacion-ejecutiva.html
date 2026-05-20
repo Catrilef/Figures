@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soporte Técnico — Presentación Ejecutiva</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f8f9fc;
+      color: #1a1a2e;
+    }
+
+    /* ── SLIDE BASE ── */
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 64px 80px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .slide { padding: 40px 28px; min-height: auto; }
+    }
+
+    /* ── SLIDE 1: HERO ── */
+    .slide-hero {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+      color: white;
+      text-align: center;
+      align-items: center;
+      gap: 24px;
+    }
+    .slide-hero .app-icon {
+      width: 96px; height: 96px;
+      background: white;
+      border-radius: 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .slide-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    .slide-hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      opacity: 0.8;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    .badge-row {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px;
+    }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #6366f1;
+      margin-bottom: 12px;
+    }
+    .section-label-white { color: rgba(255,255,255,0.6); }
+
+    /* ── SLIDE 2: QUÉ ES ── */
+    .slide-what {
+      background: white;
+      gap: 40px;
+    }
+    .slide-what h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: #1e1b4b;
+    }
+    .what-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .what-card {
+      background: #f5f3ff;
+      border-radius: 20px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .what-card .icon { font-size: 2rem; }
+    .what-card h3 { font-size: 1rem; font-weight: 700; color: #312e81; }
+    .what-card p { font-size: 0.9rem; color: #4b5563; line-height: 1.6; }
+
+    /* ── SLIDE 3: VENTAJAS ── */
+    .slide-advantages {
+      background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%);
+      color: white;
+      gap: 40px;
+    }
+    .slide-advantages h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+    }
+    .adv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .adv-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .adv-card .adv-icon {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .adv-card h3 { font-size: 1.05rem; font-weight: 700; }
+    .adv-card p { font-size: 0.88rem; opacity: 0.8; line-height: 1.65; }
+
+    /* ── SLIDE 4: FUNCIONALIDADES ── */
+    .slide-features {
+      background: #fafafa;
+      gap: 40px;
+    }
+    .slide-features h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: #1e1b4b;
+      line-height: 1.15;
+    }
+    .feat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .feat-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: white;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .feat-item .feat-num {
+      min-width: 36px; height: 36px;
+      background: #4f46e5;
+      color: white;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .feat-item .feat-text h4 { font-size: 0.95rem; font-weight: 700; color: #1e1b4b; margin-bottom: 4px; }
+    .feat-item .feat-text p { font-size: 0.85rem; color: #6b7280; line-height: 1.55; }
+
+    /* ── SLIDE 5: NOTIFICACIONES ── */
+    .slide-notif {
+      background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+      color: white;
+      gap: 40px;
+    }
+    .slide-notif h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+    }
+    .notif-highlight {
+      background: rgba(255,255,255,0.1);
+      border-left: 4px solid #6ee7b7;
+      border-radius: 0 16px 16px 0;
+      padding: 20px 24px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    .notif-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .notif-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .notif-card .notif-icon { font-size: 1.5rem; line-height: 1; }
+    .notif-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+    .notif-card p { font-size: 0.83rem; opacity: 0.8; line-height: 1.55; }
+
+    /* ── SLIDE 6: INSTALACIÓN ── */
+    .slide-install {
+      background: white;
+      gap: 40px;
+    }
+    .slide-install h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: #1e1b4b;
+    }
+    .install-url {
+      background: #f5f3ff;
+      border: 2px solid #c7d2fe;
+      border-radius: 16px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .install-url .url-icon { font-size: 1.4rem; }
+    .install-url .url-text { font-size: 1.1rem; font-weight: 700; color: #4f46e5; font-family: monospace; }
+    .install-url .url-note { font-size: 0.8rem; color: #6b7280; margin-top: 2px; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .step-card {
+      background: #f9fafb;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .step-card .step-num {
+      width: 32px; height: 32px;
+      background: #4f46e5;
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .step-card .step-icon { font-size: 1.6rem; }
+    .step-card h4 { font-size: 0.9rem; font-weight: 700; color: #1e1b4b; }
+    .step-card p { font-size: 0.82rem; color: #6b7280; line-height: 1.55; }
+    .step-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #9ca3af;
+      padding-top: 28px;
+    }
+
+    /* ── SLIDE 7: CIERRE ── */
+    .slide-close {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+      color: white;
+      text-align: center;
+      align-items: center;
+      gap: 28px;
+    }
+    .slide-close h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+    }
+    .slide-close p {
+      font-size: 1.1rem;
+      opacity: 0.8;
+      max-width: 540px;
+      line-height: 1.7;
+    }
+    .close-url {
+      background: white;
+      color: #4f46e5;
+      border-radius: 16px;
+      padding: 18px 40px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      font-family: monospace;
+    }
+    .divider {
+      width: 60px; height: 4px;
+      background: #818cf8;
+      border-radius: 999px;
+    }
+
+    /* Print */
+    @media print {
+      .slide { page-break-after: always; min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 1 — HERO
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-hero">
+  <div class="app-icon">🎫</div>
+  <h1>Soporte Técnico<br>en tu bolsillo</h1>
+  <p class="subtitle">
+    Gestiona tus tickets de soporte directamente desde tu celular,
+    con notificaciones en tiempo real y sin instalar nada de la tienda de apps.
+  </p>
+  <div class="badge-row">
+    <span class="badge">📱 Android &amp; iPhone</span>
+    <span class="badge">🔔 Notificaciones push</span>
+    <span class="badge">🚀 Sin mantenimiento</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 2 — QUÉ ES
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-what">
+  <div>
+    <p class="section-label">La herramienta</p>
+    <h2>Todo lo que necesitas para<br>gestionar tu soporte técnico</h2>
+  </div>
+  <div class="what-grid">
+    <div class="what-card">
+      <div class="icon">🖥️</div>
+      <h3>Aplicación web progresiva (PWA)</h3>
+      <p>Funciona en el navegador de tu celular y se puede instalar como app nativa. Sin tiendas de aplicaciones, sin permisos de IT.</p>
+    </div>
+    <div class="what-card">
+      <div class="icon">🔗</div>
+      <h3>Conectada a GLPI</h3>
+      <p>Se sincroniza en tiempo real con el sistema de tickets GLPI. Todo lo que ves en la app refleja el estado actual de tu solicitud.</p>
+    </div>
+    <div class="what-card">
+      <div class="icon">👤</div>
+      <h3>Para el usuario final</h3>
+      <p>Diseñada para que cualquier colaborador pueda crear, consultar y dar seguimiento a sus tickets de forma intuitiva desde el celular.</p>
+    </div>
+    <div class="what-card">
+      <div class="icon">☁️</div>
+      <h3>Siempre disponible</h3>
+      <p>Alojada en Vercel con alta disponibilidad. No requiere infraestructura adicional ni mantenimiento por parte del equipo de TI.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 3 — VENTAJAS CLAVE
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-advantages">
+  <div>
+    <p class="section-label section-label-white">Por qué esta solución</p>
+    <h2>Tres ventajas que la hacen<br>diferente a cualquier otra app</h2>
+  </div>
+  <div class="adv-grid">
+    <div class="adv-card">
+      <div class="adv-icon">🔔</div>
+      <h3>Notificaciones en tiempo real</h3>
+      <p>El usuario recibe alertas instantáneas en su celular cuando su ticket cambia de estado o recibe una respuesta del equipo de soporte, incluso con la app cerrada.</p>
+    </div>
+    <div class="adv-card">
+      <div class="adv-icon">📲</div>
+      <h3>Funciona en cualquier teléfono</h3>
+      <p>Compatible con Android e iPhone sin necesidad de descargar nada de Google Play ni App Store. Se instala desde el navegador con un solo toque.</p>
+    </div>
+    <div class="adv-card">
+      <div class="adv-icon">🛠️</div>
+      <h3>Cero mantenimiento</h3>
+      <p>No hay app que actualizar en cada dispositivo. Cualquier mejora se despliega automáticamente para todos los usuarios en el mismo instante, sin intervención.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 4 — FUNCIONALIDADES
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-features">
+  <div>
+    <p class="section-label">Lo que puedes hacer</p>
+    <h2>Todo el ciclo de soporte<br>desde una sola aplicación</h2>
+  </div>
+  <div class="feat-list">
+    <div class="feat-item">
+      <div class="feat-num">1</div>
+      <div class="feat-text">
+        <h4>Crear tickets con adjuntos</h4>
+        <p>Abre un nuevo ticket en segundos: describe el problema, elige la categoría y adjunta fotos, capturas de pantalla o documentos directamente desde la galería o la cámara de tu celular.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-num">2</div>
+      <div class="feat-text">
+        <h4>Consultar el estado de tus tickets</h4>
+        <p>Ve en tiempo real si tu ticket está Nuevo, En proceso, En espera o Resuelto. Toda la información actualizada en la palma de tu mano, sin necesidad de enviar correos para preguntar.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-num">3</div>
+      <div class="feat-text">
+        <h4>Responder y dar seguimiento</h4>
+        <p>Agrega comentarios, adjunta más evidencia y mantén una conversación directa con el equipo de soporte dentro de la misma app, como si fuera un chat de mensajería.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-num">4</div>
+      <div class="feat-text">
+        <h4>Aceptar o rechazar soluciones</h4>
+        <p>Cuando soporte marca tu ticket como resuelto, puedes aprobar la solución para cerrarlo o rechazarla con un comentario para reabrirlo, todo desde la app.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-num">5</div>
+      <div class="feat-text">
+        <h4>Responder encuestas de satisfacción</h4>
+        <p>Al cerrar un ticket, la app te notifica y te permite calificar la atención recibida directamente desde tu celular en cuestión de segundos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 5 — NOTIFICACIONES (DETALLE)
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-notif">
+  <div>
+    <p class="section-label section-label-white">Siempre informado</p>
+    <h2>Notificaciones que llegan<br>aunque la app esté cerrada</h2>
+  </div>
+  <div class="notif-highlight">
+    "Ya no es necesario estar revisando el correo ni entrar al sistema para saber si hubo avance en tu ticket. La app te avisa sola."
+  </div>
+  <div class="notif-grid">
+    <div class="notif-card">
+      <div class="notif-icon">📬</div>
+      <div>
+        <h4>Nuevas respuestas</h4>
+        <p>Recibes una notificación al instante cuando soporte agrega un comentario o actualización a tu ticket.</p>
+      </div>
+    </div>
+    <div class="notif-card">
+      <div class="notif-icon">🔄</div>
+      <div>
+        <h4>Cambios de estado</h4>
+        <p>Te avisamos cuando tu ticket pasa a "En proceso", "Resuelto" o cualquier otro estado relevante.</p>
+      </div>
+    </div>
+    <div class="notif-card">
+      <div class="notif-icon">📳</div>
+      <div>
+        <h4>Con vibración y sonido</h4>
+        <p>Las notificaciones llegan igual que un mensaje de WhatsApp: con vibración, sonido y banner en pantalla.</p>
+      </div>
+    </div>
+    <div class="notif-card">
+      <div class="notif-icon">🔒</div>
+      <div>
+        <h4>Solo tus tickets</h4>
+        <p>Cada usuario recibe únicamente notificaciones de sus propios tickets. Sin ruido innecesario.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 6 — CÓMO INSTALAR
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-install">
+  <div>
+    <p class="section-label">Instalación</p>
+    <h2>En 4 pasos, en menos<br>de un minuto</h2>
+  </div>
+
+  <div class="install-url">
+    <div class="url-icon">🌐</div>
+    <div>
+      <div class="url-text">tss-pwa-glpi.vercel.app</div>
+      <div class="url-note">Abre esta dirección en Chrome (Android) o Safari (iPhone)</div>
+    </div>
+  </div>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-icon">🌐</div>
+      <h4>Abre la liga en tu navegador</h4>
+      <p>Escribe o toca el enlace en <strong>Chrome</strong> (Android) o <strong>Safari</strong> (iPhone). No uses otro navegador.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-icon">⬇️</div>
+      <h4>Toca "Instalar" o "Agregar a inicio"</h4>
+      <p>En Android aparecerá un banner <em>"Instalar aplicación"</em>. En iPhone: menú compartir → <em>"Agregar a pantalla de inicio"</em>.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-icon">🔔</div>
+      <h4>Activa las notificaciones</h4>
+      <p>Al abrir la app por primera vez, acepta el permiso de notificaciones cuando el sistema te lo pida. Es necesario para recibir alertas.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-icon">✅</div>
+      <h4>Inicia sesión y listo</h4>
+      <p>Usa tus credenciales de red (<strong>usuario y contraseña de Windows/correo</strong>). La app ya está lista para usar.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 7 — CIERRE
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-close">
+  <div class="divider"></div>
+  <h2>Tu soporte técnico,<br>siempre contigo</h2>
+  <p>
+    Una sola herramienta para crear tickets, dar seguimiento,
+    adjuntar evidencia y recibir respuestas en tiempo real —
+    desde cualquier celular, sin instalaciones complejas, sin depender de correo.
+  </p>
+  <div class="close-url">tss-pwa-glpi.vercel.app</div>
+  <div class="badge-row">
+    <span class="badge">📱 Android &amp; iPhone</span>
+    <span class="badge">🔔 Notificaciones push</span>
+    <span class="badge">📎 Adjuntos desde cámara</span>
+    <span class="badge">🚀 Sin mantenimiento</span>
+  </div>
+  <div class="divider"></div>
+</section>
+
+</body>
+</html>
