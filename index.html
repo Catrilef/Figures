@@ -1,119 +1,391 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Panel de Gráficos</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centro de Graficos TSS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #f3f8f6;
+      --bg-soft: #e8f0ec;
+      --card: #ffffff;
+      --ink: #18302b;
+      --muted: #58736c;
+      --primary: #0d8f7a;
+      --primary-2: #0b6e83;
+      --accent: #ff8f3f;
+      --line: #d5e3dd;
+      --chip: #eff8f4;
+      --shadow: 0 10px 30px rgba(13, 111, 100, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background: #f9f9f9;
+      font-family: Manrope, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, #d9f4ea 0%, transparent 42%),
+        radial-gradient(circle at 88% 5%, #ffe6cf 0%, transparent 35%),
+        linear-gradient(180deg, var(--bg) 0%, #f9fbfa 100%);
+      min-height: 100vh;
+      padding: 26px 16px 54px;
     }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #0a6c80 0%, #0ea380 58%, #27c498 100%);
+      color: #fff;
+      border-radius: 24px;
+      padding: 34px 26px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      animation: fade-up 0.6s ease-out;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -55px;
+      top: -70px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
     h1 {
-      color: #333;
+      font-family: Sora, sans-serif;
+      font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
     }
-    .folder {
+
+    .subtitle {
+      max-width: 660px;
+      color: #d8fff5;
+      line-height: 1.55;
       margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
     }
-    ul {
-      list-style-type: none;
-      padding-left: 20px;
-    }
-    a {
-      text-decoration: none;
-      color: #007bff;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .btn-exec {
-      display: inline-flex;
-      align-items: center;
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
       gap: 10px;
-      background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
-      color: white;
-      text-decoration: none;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1rem;
-      box-shadow: 0 4px 18px rgba(67,56,202,0.35);
-      transition: transform 0.15s, box-shadow 0.15s;
-      margin-bottom: 36px;
+      position: relative;
+      z-index: 1;
     }
-    .btn-exec:hover {
+
+    .quick-links a {
       text-decoration: none;
+      color: #07352f;
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: #fff;
+      border-radius: 999px;
+      padding: 11px 16px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 6px 18px rgba(5, 48, 61, 0.2);
+    }
+
+    .quick-links a:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(67,56,202,0.45);
+      box-shadow: 0 10px 24px rgba(5, 48, 61, 0.22);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 14px;
+      animation: fade-up 0.75s ease-out;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 17px 16px 15px;
+      box-shadow: 0 4px 14px rgba(10, 77, 67, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card h2 {
+      font-family: Sora, sans-serif;
+      font-size: 1.03rem;
+      color: #112924;
+    }
+
+    .card a {
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--primary-2);
+      background: var(--chip);
+      border-radius: 10px;
+      padding: 10px 12px;
+      transition: background 0.15s ease;
+    }
+
+    .card a:hover {
+      background: #dff2ea;
+    }
+
+    .support {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px 18px;
+      box-shadow: 0 4px 16px rgba(12, 68, 58, 0.08);
+      animation: fade-up 0.92s ease-out;
+    }
+
+    .support-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .support-head h2 {
+      font-family: Sora, sans-serif;
+      font-size: 1.15rem;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(90deg, #e67120, var(--accent));
+      padding: 7px 12px;
+      border-radius: 999px;
+    }
+
+    .support-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .support-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .support-grid-top {
+      margin-bottom: 10px;
+    }
+
+    .support-grid a {
+      text-decoration: none;
+      color: #0f4038;
+      font-weight: 700;
+      border: 1px solid #cde1da;
+      background: #f4fbf8;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .support-grid a:hover {
+      border-color: #84b9ad;
+      background: #e8f8f2;
+    }
+
+    footer {
+      text-align: center;
+      color: #64837b;
+      font-size: 0.8rem;
+      padding-top: 4px;
+    }
+
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-top: 16px;
+      }
+
+      .hero {
+        border-radius: 18px;
+        padding: 24px 17px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Panel de Navegación de Gráficos</h1>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Centro de Graficos TSS</h1>
+      <p class="subtitle">
+        Acceso rapido a tableros por area, reportes de soporte y recursos de operacion.
+      </p>
+      <div class="quick-links">
+        <a href="presentacion-ejecutiva.html" target="_blank" rel="noopener noreferrer">Presentacion de GLPI App</a>
+        <a href="Guia_GLPI_App.html" target="_blank" rel="noopener noreferrer">Guia de instalacion GLPI App</a>
+      </div>
+    </section>
 
-  <a class="btn-exec" href="presentacion-ejecutiva.html" target="_blank">
-    🎫 Presentación Ejecutiva — TSS PWA
-  </a>
+    <section class="grid">
+      <article class="card">
+        <h2>Seguridad</h2>
+        <a href="visor_grafico.html?file=Seguridad%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+      </article>
 
-    <div class="folder">
-    <h2>📁 Seguridad</h2>
-    <ul>
-      <li><a href="Seguridad/Base_problems_categories.html" target="_blank">Arbol_Servicio_Seguridad</a></li>
-    </ul>
-    </div>
+      <article class="card">
+        <h2>Promociones</h2>
+        <a href="visor_grafico.html?file=Promociones%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+      </article>
 
+      <article class="card">
+        <h2>Mantenimiento</h2>
+        <a href="visor_grafico.html?file=Mantenimiento%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+      </article>
 
-    <div class="folder">
-    <h2>📁 Promociones</h2>
-    <ul>
-      <li><a href="Promociones/Base_problems_categories.html" target="_blank">Arbol_Servicio_Promos_BR</a></li>
-    </ul>
-    </div>
+      <article class="card">
+        <h2>Instalaciones</h2>
+        <a href="visor_grafico.html?file=Instalaciones%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+      </article>
 
+      <article class="card">
+        <h2>Creative</h2>
+        <a href="visor_grafico.html?file=Creative%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+      </article>
 
-    <div class="folder">
-    <h2>📁 Mantenimiento</h2>
-    <ul>
-      <li><a href="Mantenimiento/Arbol_Servicio_mantenimiento.html" target="_blank">Arbol_Servicio_mantenimiento</a></li>
-    </ul>
-    </div>
+      <article class="card">
+        <h2>Servicios Generales</h2>
+        <a href="visor_grafico.html?file=Servicios_generales%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+      </article>
 
+      <article class="card">
+        <h2>Promos BR</h2>
+        <a href="visor_grafico.html?file=Promos_Br%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+      </article>
 
-  <div class="folder">
-    <h2>📁 Soporte</h2>
-    <ul>
-      <li><a href="Soporte/Base_problems_categories.html" target="_blank">Base_problems_categoriess</a></li>
-      <li><a href="Soporte/kb_problems.html" target="_blank">KB_Problems</a></li>
-      <li><a href="Soporte/2025-Q3-S1_problems_categories.html" target="_blank">2025-Q3-S1_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q3-S2_problems_categories.html" target="_blank">2025-Q3-S2_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q3-S3_problems_categories.html" target="_blank">2025-Q3-S3_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q3-S4_problems_categories.html" target="_blank">2025-Q3-S4_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q3-S5_problems_categories.html" target="_blank">2025-Q3-S5_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q3-S6_problems_categories.html" target="_blank">2025-Q3-S6_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q4-S1_problems_categories.html" target="_blank">2025-Q4-S1_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q4-S2_problems_categories.html" target="_blank">2025-Q4-S2_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q4-S3_problems_categories.html" target="_blank">2025-Q4-S3_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q4-S4_problems_categories.html" target="_blank">2025-Q4-S4_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q4-S5_problems_categories.html" target="_blank">2025-Q4-S5_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q4-S6_problems_categories.html" target="_blank">2025-Q4-S6_problems_categories</a></li>
-      <li><a href="Soporte/2025-Q4-S7_problems_categories.html" target="_blank">2025-Q4-S7_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q1-S1_problems_categories.html" target="_blank">2026-Q1-S1_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q1-S2_problems_categories.html" target="_blank">2026-Q1-S2_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q1-S3_problems_categories.html" target="_blank">2026-Q1-S3_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q1-S4_problems_categories.html" target="_blank">2026-Q1-S4_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q1-S5_problems_categories.html" target="_blank">2026-Q1-S5_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q1-S6_problems_categories.html" target="_blank">2026-Q1-S6_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q2-S1_problems_categories.html" target="_blank">2026-Q2-S1_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q2-S2_problems_categories.html" target="_blank">2026-Q2-S2_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q2-S3_problems_categories.html" target="_blank">2026-Q2-S3_problems_categories</a></li>
-      <li><a href="Soporte/2026-Q2-S4_problems_categories.html" target="_blank">2026-Q2-S4_problems_categories</a></li>
+      <article class="card">
+        <h2>Soporte Base</h2>
+        <a href="visor_grafico.html?file=Soporte%2FBase_problems_categories.html" rel="noopener noreferrer">Abrir grafico base</a>
+        <a href="visor_grafico.html?file=Soporte%2Fkb_problems.html" rel="noopener noreferrer">Abrir KB Problems</a>
+      </article>
+    </section>
 
-      
-      <li><a href="Soporte/Seguimiento_Flujos.html" target="_blank">Seguimiento_Flujos</a></li>
-    </ul>
-  </div>
+    <section class="support">
+      <div class="support-head">
+        <h2>Soporte por sprint</h2>
+        <span class="tag">ACTUALIZACION CADA 2 SEMANAS</span>
+      </div>
+      <p class="support-note">
+        Esta lista se lee desde <strong>soporte_sprints.yaml</strong>. Para agregar un nuevo grafico, solo anade el nombre del archivo en ese YAML.
+      </p>
+      <div class="support-grid support-grid-top">
+        <a href="visor_grafico.html?file=Soporte%2FSeguimiento_Flujos.html" rel="noopener noreferrer">Seguimiento por sprint</a>
+      </div>
+      <div class="support-grid" id="support-grid"></div>
+    </section>
 
+    <footer>
+      TSS Analysis Figures · Navegacion centralizada
+    </footer>
+  </main>
 
+  <script>
+    const supportGrid = document.getElementById("support-grid");
+
+    const parseSimpleYamlList = (yamlText, sectionName) => {
+      const lines = yamlText.split(/\r?\n/);
+      const result = [];
+      let inSection = false;
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+
+        if (!trimmed || trimmed.startsWith("#")) {
+          continue;
+        }
+
+        if (trimmed === `${sectionName}:`) {
+          inSection = true;
+          continue;
+        }
+
+        if (inSection && /^[a-zA-Z0-9_-]+:\s*$/.test(trimmed)) {
+          break;
+        }
+
+        if (inSection && trimmed.startsWith("- ")) {
+          const value = trimmed.slice(2).trim();
+          if (value) {
+            result.push(value);
+          }
+        }
+      }
+
+      return result;
+    };
+
+    const createSupportLink = (fileName) => {
+      const anchor = document.createElement("a");
+      anchor.href = `visor_grafico.html?file=${encodeURIComponent(`Soporte/${fileName}`)}`;
+      anchor.rel = "noopener noreferrer";
+      anchor.textContent = fileName.replace("_problems_categories.html", "");
+      supportGrid.appendChild(anchor);
+    };
+
+    const showYamlError = () => {
+      const warning = document.createElement("p");
+      warning.className = "support-note";
+      warning.style.marginTop = "10px";
+      warning.textContent = "No se pudo leer soporte_sprints.yaml. Verifica que abras este sitio desde un servidor web y no con file://.";
+      supportGrid.parentElement.appendChild(warning);
+    };
+
+    fetch("soporte_sprints.yaml")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el YAML");
+        }
+        return response.text();
+      })
+      .then((yamlText) => {
+        const sprintFiles = parseSimpleYamlList(yamlText, "support_sprints");
+        sprintFiles.forEach(createSupportLink);
+      })
+      .catch(() => {
+        showYamlError();
+      });
+  </script>
 </body>
 </html>
 

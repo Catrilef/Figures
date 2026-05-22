@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visor de Grafico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f9f7;
+      --panel: #ffffff;
+      --line: #cfe3dc;
+      --ink: #19342c;
+      --muted: #5b7b72;
+      --primary: #0e8a77;
+      --primary-dark: #0c6f60;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Manrope, sans-serif;
+      background: linear-gradient(180deg, #eaf3ef 0%, var(--bg) 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .back-btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, var(--primary) 0%, #12a890 100%);
+      color: #fff;
+      font-weight: 700;
+      font-family: Sora, sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #0f907c 100%);
+    }
+
+    .title-wrap {
+      min-width: 0;
+    }
+
+    .title {
+      font-family: Sora, sans-serif;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+
+    .path {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 60vw;
+    }
+
+    .frame-wrap {
+      padding: 10px;
+      height: calc(100vh - 70px);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .message {
+      margin: 26px auto;
+      max-width: 680px;
+      background: #fff;
+      border: 1px solid #f0d3ce;
+      color: #7a2e1e;
+      border-radius: 12px;
+      padding: 16px;
+      line-height: 1.6;
+    }
+
+    .message a {
+      color: #0b6e83;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .path {
+        max-width: 90vw;
+      }
+
+      .frame-wrap {
+        height: calc(100vh - 108px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="left">
+      <button class="back-btn" id="go-back" type="button">Volver</button>
+      <div class="title-wrap">
+        <p class="title">Visor de Grafico</p>
+        <p class="path" id="graph-path">Cargando...</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="content" class="frame-wrap"></main>
+
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    const file = queryParams.get("file");
+
+    const content = document.getElementById("content");
+    const graphPath = document.getElementById("graph-path");
+
+    const isValidFile = (value) => {
+      if (!value) return false;
+      if (value.includes("..")) return false;
+      if (/^(https?:|file:|javascript:)/i.test(value)) return false;
+      return value.endsWith(".html");
+    };
+
+    if (!isValidFile(file)) {
+      content.innerHTML =
+        '<div class="message">No se encontro un grafico valido. Regresa al <a href="index.html">inicio</a> e intenta de nuevo.</div>';
+      graphPath.textContent = "Ruta no valida";
+    } else {
+      const frame = document.createElement("iframe");
+      frame.src = file;
+      frame.title = "Grafico";
+      content.appendChild(frame);
+      graphPath.textContent = file;
+    }
+
+    document.getElementById("go-back").addEventListener("click", () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+</body>
+</html>
